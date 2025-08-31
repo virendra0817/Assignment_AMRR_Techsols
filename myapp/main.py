@@ -6,6 +6,7 @@ from . import crud
 from .models import User, Wallet
 from pydantic import BaseModel
 import os 
+import uvicorn 
 app = FastAPI(title="Wallet API")
 
 # Create DB tables on startup
@@ -47,6 +48,7 @@ def update_wallet(user_id: int, body: WalletUpdate, session: Session = Depends(g
 def fetch_transactions(user_id: int, session: Session = Depends(get_session)):
     txs = crud.get_transactions_for_user(session, user_id)
     return {"user_id": user_id, "transactions": txs}
-
-port = int(os.environ.get("PORT" , 8000))
-uvicorn.run (app , host ="0.0.0.0",port = port )
+if __name__ == "__main__":
+    
+    port = int(os.environ.get("PORT" , 8000))
+   uvicorn.run (myapp.main :app , host ="0.0.0.0",port = port )
